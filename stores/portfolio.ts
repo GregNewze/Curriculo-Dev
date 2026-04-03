@@ -42,7 +42,7 @@ export const usePortfolioStore = defineStore('portfolio', {
     location: 'Manaus, AM — Brasil',
     email: 'erico.nunesc@gmail.com',
     phone: '(92) 99901-4314',
-    linkedin: 'https://linkedin.com/in/érico-nunes-dev',
+    linkedin: 'www.linkedin.com/in/erico-nunes-dev',
     github: 'https://github.com/GregNewze',
     summary:
       'Desenvolvedor com foco em integração hardware/software, APIs REST e automação de fluxos. Construo sistemas do microcontrolador à aplicação fullstack, desde a camada física com microcontroladores/processadores até o back-end e mobile.',
