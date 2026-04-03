@@ -1,4 +1,4 @@
-# Érico Nunes — Portfólio
+# Érico Nunes / Portfólio
 
 Portfólio pessoal desenvolvido com Nuxt 3 e Vue 3, com foco em performance, organização e boas práticas.
 
