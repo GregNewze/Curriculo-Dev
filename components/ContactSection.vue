@@ -70,7 +70,7 @@ const contactItems = computed(() => [
   },
   {
     type: 'linkedin',
-    value: 'erico-nunes-dev',
+    value: 'www.linkedin.com/in/erico-nunes-dev',
     href: store.linkedin,
     external: true,
   },
