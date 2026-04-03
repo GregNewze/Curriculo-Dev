@@ -71,7 +71,7 @@ const contactItems = computed(() => [
   {
     type: 'linkedin',
     value: 'www.linkedin.com/in/erico-nunes-dev',
-    href: store.linkedin,
+    href: store.linkedin.startsWith('http') ? store.linkedin : `https://${store.linkedin}`,
     external: true,
   },
 ])

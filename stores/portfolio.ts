@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+
 export interface Project {
   id: string
   name: string
@@ -42,7 +44,7 @@ export const usePortfolioStore = defineStore('portfolio', {
     location: 'Manaus, AM — Brasil',
     email: 'erico.nunesc@gmail.com',
     phone: '(92) 99901-4314',
-    linkedin: 'www.linkedin.com/in/erico-nunes-dev',
+    linkedin: 'https://www.linkedin.com/in/erico-nunes-dev',
     github: 'https://github.com/GregNewze',
     summary:
       'Desenvolvedor com foco em integração hardware/software, APIs REST e automação de fluxos. Construo sistemas do microcontrolador à aplicação fullstack, desde a camada física com microcontroladores/processadores até o back-end e mobile.',
@@ -53,19 +55,14 @@ export const usePortfolioStore = defineStore('portfolio', {
       { value: '1ª', label: 'Equipe da região Norte no Shell Eco-marathon' },
     ],
 
-  skillCategories: [
-  { title: 'Linguagens', skills: ['TypeScript/Javascript', 'Python', 'Java','C/C++'] },
-
-  { title: 'Back-End', skills: ['Node.js', 'REST APIs', 'Docker', 'Express.js', 'FastAPI'] },
-
-  { title: 'Front-End / Mobile', skills: ['React', 'React Native', 'Vue.js', 'Nuxt.js', 'Vite'] },
-
-  { title: 'Banco de Dados', skills: ['PostgreSQL', 'MySQL', 'TimescaleDB', 'Supabase', 'Firebase'] },
-
-  { title: 'Embarcados / IoT', skills: ['STM32', 'ESP32','Raspberry Pi', 'UART', 'I2C', 'SPI','MQTT','Sensores'] },
-
-  { title: 'Ferramentas', skills: ['Git', 'GitHub','Gitlab', 'Vercel' , 'N8N'] },
-] as SkillCategory[],
+    skillCategories: [
+      { title: 'Linguagens', skills: ['TypeScript/Javascript', 'Python', 'Java', 'C/C++'] },
+      { title: 'Back-End', skills: ['Node.js', 'REST APIs', 'Docker', 'Express.js', 'FastAPI'] },
+      { title: 'Front-End / Mobile', skills: ['React', 'React Native', 'Vue.js', 'Nuxt.js', 'Vite'] },
+      { title: 'Banco de Dados', skills: ['PostgreSQL', 'MySQL', 'TimescaleDB', 'Supabase', 'Firebase'] },
+      { title: 'Embarcados / IoT', skills: ['STM32', 'ESP32','Raspberry Pi', 'UART', 'I2C', 'SPI','MQTT','Sensores'] },
+      { title: 'Ferramentas', skills: ['Git', 'GitHub','Gitlab', 'Vercel' , 'N8N'] },
+    ] as SkillCategory[],
 
     projects: [
       {
