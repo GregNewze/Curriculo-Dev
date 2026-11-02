@@ -1,103 +1,123 @@
 <template>
-  <section id="projetos" class="section-wrapper">
-    <div class="section-label">Projetos</div>
+  <section id="projetos" class="section">
+    <h2 v-reveal class="section-title">Projetos</h2>
 
-    <div class="project-grid">
-      <article
-        v-for="project in store.projects"
+    <div class="list">
+      <details
+        v-for="(project, i) in store.projects"
         :key="project.id"
-        class="bg-white dark:bg-[#0d0d0d] p-7 card-hover cursor-default"
+        v-reveal="i * 80"
+        class="project"
+        open
       >
-        <!-- Header -->
-        <div class="flex justify-between items-start gap-4 mb-3">
-          <h3 class="text-[1.05rem] font-semibold tracking-[-0.01em] text-[#0d0d0d] dark:text-[#f0f0ee]">
-            {{ project.name }}
-          </h3>
-          <span
-            class="font-mono text-[10px] px-2 py-1 rounded-[3px] whitespace-nowrap shrink-0"
-            :class="project.status === 'active' ? 'badge-active' : 'badge-done'"
-          >
-            {{ project.status === 'active' ? 'em andamento · ' + project.year : project.year }}
+        <summary>
+          <h3 class="name">{{ split(project.name).main }}</h3>
+          <span class="meta">
+            <span v-if="split(project.name).sub" class="sub">{{ split(project.name).sub }}</span>
+            <span class="muted small">
+              {{ project.status === 'active' ? `Em andamento · ${project.year}` : project.year }}
+            </span>
           </span>
-        </div>
+          <span class="plus" aria-hidden="true"></span>
+        </summary>
 
-        <!-- Org -->
-        <p class="font-mono text-[12px] text-[#8a8a8a] mb-3">{{ project.org }}</p>
-
-        <!-- Description -->
-        <p class="text-[14px] text-[#4a4a4a] dark:text-[#8a8a8a] leading-[1.7] mb-4">
-          {{ project.description }}
-        </p>
-
-        <!-- Bullets -->
-        <ul class="space-y-1.5 mb-4">
-          <li
-            v-for="bullet in project.bullets"
-            :key="bullet"
-            class="text-[13px] text-[#4a4a4a] dark:text-[#8a8a8a] flex gap-2"
-          >
-            <span class="text-[#8a8a8a] shrink-0">→</span>
-            <span>{{ bullet }}</span>
-          </li>
-        </ul>
-
-        <!-- Stack + link -->
-        <div class="flex justify-between items-end flex-wrap gap-3">
-          <div class="flex flex-wrap gap-1.5">
-            <span v-for="tech in project.stack" :key="tech" class="tag">{{ tech }}</span>
+        <div class="panel grid12">
+          <div class="text">
+            <p class="org muted">{{ project.org }}</p>
+            <p class="desc">{{ project.description }}</p>
+            <ul class="bullets">
+              <li v-for="bullet in project.bullets" :key="bullet">{{ bullet }}</li>
+            </ul>
           </div>
-          <a
-            v-if="project.github"
-            :href="project.github"
-            target="_blank"
-            rel="noopener"
-            class="font-mono text-[12px] text-[#8a8a8a] hover:text-[#0d0d0d] dark:hover:text-[#f0f0ee]
-                   transition-colors no-underline"
-          >
-            GitHub ↗
-          </a>
+
+          <div class="side">
+            <p class="stack">{{ project.stack.join(', ') }}</p>
+            <TelemetryTicker v-if="project.id === 'mach-force'" />
+            <a v-if="project.github" :href="project.github" target="_blank" rel="noopener" class="link">
+              Ver no GitHub
+            </a>
+          </div>
         </div>
-      </article>
+      </details>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { usePortfolioStore } from '~/stores/portfolio'
+
 const store = usePortfolioStore()
+
+function split(name: string) {
+  const [main, ...rest] = name.split(' — ')
+  return { main, sub: rest.join(' — ') }
+}
 </script>
 
 <style scoped>
-.project-grid {
+.list { display: grid; gap: 6px; }
+
+.project { background: var(--surface); }
+
+summary {
   display: grid;
-  gap: 1px;
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 8px 24px;
+  padding: clamp(20px, 2.6vw, 36px) clamp(16px, 2.4vw, 32px);
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: calc(clamp(16px, 2.4vw, 32px) + 40px);
+  transition: opacity 0.18s var(--ease);
 }
-:global(.dark) .project-grid {
-  background-color: #2a2a2a;
-  border-color: #2a2a2a;
-}
+summary::-webkit-details-marker { display: none; }
+summary:hover { opacity: 0.75; }
 
-.badge-active {
-  background: #f0faf4;
-  color: #1a7a3e;
-  border: 1px solid #b8e6cb;
+.name {
+  font-size: clamp(2.5rem, 7.4vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
 }
-:global(.dark) .badge-active {
-  background: #0a1f12;
-  color: #4ade80;
-  border-color: #1a4028;
-}
+.meta { display: grid; justify-items: end; gap: 2px; text-align: right; }
+.sub { font-size: var(--step-small); max-width: 26ch; }
 
-.badge-done {
-  background: #f0efec;
-  color: #8a8a8a;
-  border: 1px solid #e0e0e0;
+.plus {
+  position: absolute;
+  right: clamp(16px, 2.4vw, 32px);
+  top: clamp(26px, 3vw, 42px);
+  width: 20px;
+  height: 20px;
 }
-:global(.dark) .badge-done {
-  background: #1e1e1e;
-  color: #606060;
-  border-color: #2a2a2a;
+.plus::before,
+.plus::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+  transition: transform 0.3s var(--ease);
+}
+.plus::before { left: 0; right: 0; top: 9px; height: 2px; }
+.plus::after { top: 0; bottom: 0; left: 9px; width: 2px; }
+details[open] .plus::after { transform: scaleY(0); }
+
+.panel {
+  padding: 8px clamp(16px, 2.4vw, 32px) clamp(56px, 7vw, 104px);
+  row-gap: 32px;
+}
+.text { grid-column: 1 / span 6; }
+.side { grid-column: 8 / -1; display: grid; gap: 24px; align-content: start; }
+
+.org { font-size: var(--step-small); margin-bottom: 14px; }
+.desc { font-size: var(--step-lead); line-height: 1.3; letter-spacing: -0.015em; margin-bottom: 20px; }
+.bullets { display: grid; gap: 8px; }
+.bullets li { padding-left: 1.2em; position: relative; }
+.bullets li::before { content: '→'; position: absolute; left: 0; color: var(--muted); }
+
+.stack { font-size: var(--step-body); line-height: 1.4; max-width: 40ch; }
+
+@media (max-width: 860px) {
+  summary { grid-template-columns: 1fr; }
+  .meta { justify-items: start; text-align: left; }
+  .text, .side { grid-column: 1 / -1; }
 }
 </style>

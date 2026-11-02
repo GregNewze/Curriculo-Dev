@@ -1,6 +1,7 @@
 <template>
   <div>
     <HeroSection />
+    <AboutSection />
     <SkillsSection />
     <ProjectsSection />
     <ExperienceSection />

@@ -1,51 +1,39 @@
 <template>
-  <section id="contato" class="section-wrapper">
-    <div class="section-label">contato</div>
+  <section id="contato" class="contact">
+    <h2 v-reveal class="section-title head">Contato</h2>
 
-    <!-- Contact grid -->
-    <div class="contact-grid mb-8">
-      <a
-        v-for="item in contactItems"
-        :key="item.type"
-        :href="item.href"
-        :target="item.external ? '_blank' : undefined"
-        :rel="item.external ? 'noopener' : undefined"
-        class="bg-white dark:bg-[#0d0d0d] p-5 no-underline card-hover block"
+    <div class="rows">
+      <component
+        :is="row.href ? 'a' : 'div'"
+        v-for="(row, i) in rows"
+        :key="row.label"
+        v-reveal="i * 50"
+        :href="row.href"
+        :target="row.external ? '_blank' : undefined"
+        :rel="row.external ? 'noopener' : undefined"
+        :aria-label="row.href ? `${row.label}: ${row.value}` : undefined"
+        class="row"
       >
-        <p class="font-mono text-[11px] tracking-[0.1em] uppercase text-[#8a8a8a] mb-1.5">
-          {{ item.type }}
-        </p>
-        <p class="text-[14px] font-medium text-[#0d0d0d] dark:text-[#f0f0ee]">
-          {{ item.value }}
-        </p>
-      </a>
+        <span class="row-text">{{ row.value }}</span>
+        <img
+          v-if="i === 0"
+          class="round"
+          src="/img/teatro-noite-jpg.jpg"
+          width="1920"
+          height="1815"
+          loading="lazy"
+          alt="Teatro Amazonas iluminado à noite, em Manaus"
+        />
+      </component>
 
-      <!-- Location (not a link) -->
-      <div class="bg-white dark:bg-[#0d0d0d] p-5">
-        <p class="font-mono text-[11px] tracking-[0.1em] uppercase text-[#8a8a8a] mb-1.5">
-          localização
-        </p>
-        <p class="text-[14px] font-medium text-[#0d0d0d] dark:text-[#f0f0ee]">
-          {{ store.location }}
-        </p>
+      <div class="row hello">
+        <span class="row-text">Vamos conversar</span>
+        <a :href="`mailto:${store.email}`" class="arrow" aria-label="Enviar e-mail para Érico">
+          <svg viewBox="0 0 24 24" width="40%" height="40%" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
       </div>
-    </div>
-
-    <!-- Download bar -->
-    <div
-      class="flex items-center justify-between flex-wrap gap-4 p-6
-             bg-[#f7f7f5] dark:bg-[#161616]
-             border border-[#e0e0e0] dark:border-[#2a2a2a]"
-    >
-      <div>
-        <p class="text-[14px] text-[#4a4a4a] dark:text-[#8a8a8a]">
-          <strong class="text-[#0d0d0d] dark:text-[#f0f0ee] font-medium">Curriculum Vitae</strong>
-          Atualizado em 03/04/2026.
-        </p>
-      </div>
-      <a href="/CV_Erico_Nunes_ATS.pdf" download class="btn-primary shrink-0">
-        ⬇ Baixar CV em PDF
-      </a>
     </div>
   </section>
 </template>
@@ -55,38 +43,66 @@ import { usePortfolioStore } from '~/stores/portfolio'
 
 const store = usePortfolioStore()
 
-const contactItems = computed(() => [
+const rows = computed(() => [
+  { label: 'E-mail', value: store.email, href: `mailto:${store.email}`, external: false },
+  { label: 'Telefone', value: store.phone, href: `tel:+55${store.phone.replace(/\D/g, '')}`, external: false },
   {
-    type: 'e-mail',
-    value: store.email,
-    href: `mailto:${store.email}`,
-    external: false,
-  },
-  {
-    type: 'telefone',
-    value: store.phone,
-    href: `tel:+55${store.phone.replace(/\D/g, '')}`,
-    external: false,
-  },
-  {
-    type: 'linkedin',
-    value: 'www.linkedin.com/in/erico-nunes-dev',
-    href: store.linkedin.startsWith('http') ? store.linkedin : `https://${store.linkedin}`,
+    label: 'LinkedIn',
+    value: store.linkedin.replace(/^https?:\/\/(www\.)?/, ''),
+    href: store.linkedin,
     external: true,
   },
+  { label: 'GitHub', value: store.github.replace(/^https?:\/\//, ''), href: store.github, external: true },
+  { label: 'Localização', value: store.location, href: undefined, external: false },
 ])
 </script>
 
 <style scoped>
-.contact-grid {
+.contact { padding-top: var(--gap-section); }
+.head { padding: 0 var(--margin); }
+
+/* Faixas de largura total, alternando dois tons do chão (sem linhas). */
+.rows { display: grid; }
+.row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: clamp(84px, 11vw, 150px);
+  padding: 0 var(--margin) clamp(12px, 1.6vw, 24px);
+  text-decoration: none;
+  background: var(--bg);
+}
+.rows > :nth-child(even) { background: var(--surface); }
+.row-text {
+  font-size: clamp(1.5rem, 5vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+a.row { transition: padding-left 0.3s var(--ease); }
+a.row:hover { padding-left: calc(var(--margin) + 16px); opacity: 1; }
+
+.round {
+  width: clamp(48px, 7vw, 104px);
+  height: clamp(48px, 7vw, 104px);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.hello { align-items: center; justify-content: flex-start; gap: 24px; background: var(--accent) !important; color: var(--accent-ink); }
+.arrow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1px;
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0;
+  place-items: center;
+  width: clamp(56px, 6vw, 88px);
+  height: clamp(56px, 6vw, 88px);
+  border-radius: 50%;
+  background: var(--accent-ink);
+  color: var(--accent);
+  transition: transform 0.25s var(--ease);
 }
-:global(.dark) .contact-grid {
-  background-color: #2a2a2a;
-  border-color: #2a2a2a;
-}
+.arrow:hover { transform: translateX(6px); }
+.arrow:active { transform: scale(0.94); }
 </style>

@@ -1,62 +1,74 @@
 <template>
-  <section id="experiencia" class="section-wrapper">
-    <div class="section-label">experiência &amp; formação</div>
+  <section id="experiencia" class="section">
+    <figure v-reveal class="wide">
+      <img
+        src="/img/teatro-noite-jpg.jpg"
+        width="1920"
+        height="1815"
+        loading="lazy"
+        alt="Fachada do Teatro Amazonas iluminada à noite, em Manaus"
+      />
+      <figcaption class="muted small">Teatro Amazonas, Manaus.</figcaption>
+    </figure>
 
-    <!-- Experience -->
-    <div class="exp-grid mb-8">
-      <div
-        v-for="exp in store.experiences"
-        :key="exp.title"
-        class="bg-white dark:bg-[#0d0d0d] p-6 grid grid-cols-[1fr_auto] gap-4"
-      >
-        <div>
-          <h3 class="text-[0.95rem] font-medium text-[#0d0d0d] dark:text-[#f0f0ee] mb-1">
-            {{ exp.title }}
-          </h3>
-          <p class="font-mono text-[12px] text-[#8a8a8a]">{{ exp.org }}</p>
-        </div>
-        <div class="font-mono text-[12px] text-[#8a8a8a] text-right whitespace-nowrap">
-          {{ exp.date }}
-        </div>
-        <p class="text-[14px] text-[#4a4a4a] dark:text-[#8a8a8a] leading-[1.7] col-span-2">
-          {{ exp.description }}
-        </p>
-      </div>
-    </div>
+    <h2 v-reveal class="section-title">Experiência e formação</h2>
 
-    <!-- Education -->
-    <div class="exp-grid">
-      <div
-        v-for="edu in store.education"
-        :key="edu.degree"
-        class="bg-[#f7f7f5] dark:bg-[#161616] p-6 flex justify-between items-start gap-4"
-      >
-        <div>
-          <h3 class="text-[1rem] font-medium text-[#0d0d0d] dark:text-[#f0f0ee] mb-1">
-            {{ edu.degree }}
-          </h3>
-          <p class="font-mono text-[12px] text-[#8a8a8a]">{{ edu.school }}</p>
-        </div>
-        <div class="font-mono text-[12px] text-[#8a8a8a] whitespace-nowrap">{{ edu.period }}</div>
-      </div>
+    <div class="ledger">
+      <p class="group muted small">Eventos</p>
+      <article v-for="(exp, i) in store.experiences" :key="exp.title" v-reveal="i * 80" class="item">
+        <h3 class="item-title">{{ exp.title }}</h3>
+        <p class="item-org muted">{{ exp.org }}</p>
+        <p class="item-date tnum">{{ exp.date }}</p>
+        <p class="item-desc">{{ exp.description }}</p>
+      </article>
+
+      <p class="group muted small">Formação</p>
+      <article v-for="(edu, i) in store.education" :key="edu.degree" v-reveal="i * 80" class="item">
+        <h3 class="item-title">{{ edu.degree }}</h3>
+        <p class="item-org muted">{{ edu.school }}</p>
+        <p class="item-date tnum">{{ edu.period }}</p>
+      </article>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { usePortfolioStore } from '~/stores/portfolio'
+
 const store = usePortfolioStore()
 </script>
 
 <style scoped>
-.exp-grid {
-  display: grid;
-  gap: 1px;
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0;
+.wide { margin: 0 0 var(--gap-section); }
+.wide img {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 56vh, 640px);
+  object-fit: cover;
+  object-position: 50% 45%;
 }
-:global(.dark) .exp-grid {
-  background-color: #2a2a2a;
-  border-color: #2a2a2a;
+.wide figcaption { margin-top: 10px; }
+
+.ledger {
+  margin-left: 22%;
+  max-width: 760px;
+  display: grid;
+  gap: 28px;
+}
+.group { margin-top: 24px; }
+.group:first-child { margin-top: 0; }
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 24px;
+}
+.item-title { font-size: var(--step-lead); letter-spacing: -0.03em; line-height: 1.1; }
+.item-org { grid-column: 1; }
+.item-date { grid-column: 2; grid-row: 1; text-align: right; white-space: nowrap; }
+.item-desc { grid-column: 1 / -1; margin-top: 6px; max-width: 60ch; }
+
+@media (max-width: 860px) {
+  .ledger { margin-left: 0; }
 }
 </style>

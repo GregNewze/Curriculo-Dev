@@ -1,38 +1,50 @@
 <template>
-  <section id="certificados" class="section-wrapper">
-    <div class="section-label">certificados</div>
+  <section id="certificados" class="section">
+    <h2 v-reveal class="giant">Certificados</h2>
 
-    <div class="certs-grid">
-      <div
-        v-for="cert in store.certificates"
-        :key="cert.name"
-        class="bg-white dark:bg-[#0d0d0d] p-5"
-      >
-        <h3 class="text-[14px] font-medium text-[#0d0d0d] dark:text-[#f0f0ee] mb-1">
-          {{ cert.name }}
-        </h3>
-        <p class="font-mono text-[12px] text-[#8a8a8a]">{{ cert.issuer }}</p>
-        <p v-if="cert.hours" class="font-mono text-[11px] text-[#8a8a8a] mt-1">{{ cert.hours }}</p>
-      </div>
-    </div>
+    <ul class="bars">
+      <li v-for="(cert, i) in store.certificates" :key="cert.name" v-reveal="i * 50" class="bar">
+        <span class="bar-name">{{ cert.name }}</span>
+        <span class="bar-issuer muted">{{ cert.issuer }}</span>
+        <span v-if="cert.hours" class="bar-hours tnum">{{ cert.hours }}</span>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script setup lang="ts">
 import { usePortfolioStore } from '~/stores/portfolio'
+
 const store = usePortfolioStore()
 </script>
 
 <style scoped>
-.certs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1px;
-  background-color: #e0e0e0;
-  border: 1px solid #e0e0e0;
+.giant {
+  font-size: 14.4vw;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  margin: 0 0 clamp(24px, 3vw, 44px) -0.04em;
 }
-:global(.dark) .certs-grid {
-  background-color: #2a2a2a;
-  border-color: #2a2a2a;
+
+.bars { display: grid; gap: 6px; }
+.bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  padding: 10px clamp(16px, 2vw, 24px);
+  background: var(--surface);
+  transition: transform 0.25s var(--ease);
+}
+.bar:hover { transform: translateX(6px); }
+.bar-name { font-weight: 500; }
+.bar-hours { text-align: right; }
+
+@media (max-width: 640px) {
+  .bar { grid-template-columns: 1fr auto; }
+  .bar-issuer { grid-row: 2; grid-column: 1; font-size: var(--step-small); }
+  .bar-hours { grid-row: 1; grid-column: 2; }
 }
 </style>
