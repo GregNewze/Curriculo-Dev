@@ -3,20 +3,14 @@
     <h1 class="name">
       <span class="word">Érico</span>
       <span class="frame">
-        <img
-          src="/img/encontro-das-aguas-jpg.jpg"
-          width="1172"
-          height="862"
-          alt="Encontro das Águas em Manaus: o Rio Negro, escuro, e o Solimões, barrento, correm lado a lado sem se misturar"
-          fetchpriority="high"
-        />
+        <NeuralCanvas />
       </span>
       <span class="word">Nunes</span>
     </h1>
 
     <div class="foot grid12">
       <p v-reveal="500" class="foot-line">
-        Desenvolvedor fullstack e de sistemas embarcados em Manaus. Construo do microcontrolador à aplicação.
+        Engenharia de IA e Dados em Manaus. Visão computacional, telemetria e sistemas do chão de fábrica ao dashboard.
       </p>
 
       <div v-reveal="620" class="foot-actions">
@@ -43,8 +37,8 @@ const store = usePortfolioStore()
   justify-content: space-between;
 }
 
-/* O nome é o monumento. O Encontro das Águas ocupa o espaço entre as duas palavras:
-   dois rios lado a lado, como hardware e software. */
+/* O nome é o monumento. No espaço entre as palavras vive a rede neural:
+   hardware e dados falando entre si, como um glifo. */
 .name {
   margin: auto 0;
   display: flex;
@@ -61,34 +55,16 @@ const store = usePortfolioStore()
 .frame {
   display: block;
   align-self: baseline;
-  width: 1.5em;
-  height: 0.7em;
+  width: 1.6em;
+  height: 0.74em;
   overflow: hidden;
   background: var(--surface);
   animation: shutter 1.1s var(--ease) 0.15s both;
-}
-.frame img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 72%;
-  animation:
-    settle 1.1s var(--ease) 0.15s both,
-    drift 26s ease-in-out 1.4s infinite alternate;
 }
 
 @keyframes shutter {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
-}
-@keyframes settle {
-  from { transform: scale(1.12); }
-  to { transform: scale(1); }
-}
-@keyframes drift {
-  from { transform: scale(1); }
-  to { transform: scale(1.07); }
 }
 
 .foot {
@@ -99,7 +75,7 @@ const store = usePortfolioStore()
   grid-column: 6 / span 4;
   font-size: max(1.125rem, var(--step-body));
   line-height: 1.45;
-  max-width: 34ch;
+  max-width: 36ch;
 }
 .foot-actions {
   grid-column: 10 / -1;

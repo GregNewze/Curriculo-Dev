@@ -20,15 +20,15 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Érico Nunes — Fullstack Developer',
+      title: 'Érico Nunes — Engenharia de IA e Dados',
       htmlAttrs: { lang: 'pt-BR' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Portfólio de Érico Nunes Carneiro — Desenvolvedor Fullstack, Back-End e Sistemas Embarcados. Manaus, AM.' },
+        { name: 'description', content: 'Portfólio de Érico Nunes Carneiro — Engenharia de IA e Dados, visão computacional, telemetria industrial e sistemas embarcados. Manaus, AM.' },
         { name: 'author', content: 'Érico Nunes Carneiro' },
-        { property: 'og:title', content: 'Érico Nunes — Fullstack Developer' },
-        { property: 'og:description', content: 'Desenvolvedor Back-End e Sistemas Embarcados com experiência em IoT, APIs REST e automação de fluxos.' },
+        { property: 'og:title', content: 'Érico Nunes — Engenharia de IA e Dados' },
+        { property: 'og:description', content: 'Visão computacional, agentes inteligentes e dados em tempo real, do chão de fábrica ao dashboard.' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary' },
       ],

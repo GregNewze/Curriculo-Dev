@@ -15,15 +15,6 @@
         class="row"
       >
         <span class="row-text">{{ row.value }}</span>
-        <img
-          v-if="i === 0"
-          class="round"
-          src="/img/teatro-noite-jpg.jpg"
-          width="1920"
-          height="1815"
-          loading="lazy"
-          alt="Teatro Amazonas iluminado à noite, em Manaus"
-        />
       </component>
 
       <div class="row hello">
@@ -83,14 +74,6 @@ const rows = computed(() => [
 }
 a.row { transition: padding-left 0.3s var(--ease); }
 a.row:hover { padding-left: calc(var(--margin) + 16px); opacity: 1; }
-
-.round {
-  width: clamp(48px, 7vw, 104px);
-  height: clamp(48px, 7vw, 104px);
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
 
 .hello { align-items: center; justify-content: flex-start; gap: 24px; background: var(--accent) !important; color: var(--accent-ink); }
 .arrow {

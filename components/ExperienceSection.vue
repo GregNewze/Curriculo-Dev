@@ -1,16 +1,5 @@
 <template>
   <section id="experiencia" class="section">
-    <figure v-reveal class="wide">
-      <img
-        src="/img/teatro-noite-jpg.jpg"
-        width="1920"
-        height="1815"
-        loading="lazy"
-        alt="Fachada do Teatro Amazonas iluminada à noite, em Manaus"
-      />
-      <figcaption class="muted small">Teatro Amazonas, Manaus.</figcaption>
-    </figure>
-
     <h2 v-reveal class="section-title">Experiência e formação</h2>
 
     <div class="ledger">
@@ -39,16 +28,6 @@ const store = usePortfolioStore()
 </script>
 
 <style scoped>
-.wide { margin: 0 0 var(--gap-section); }
-.wide img {
-  display: block;
-  width: 100%;
-  height: clamp(280px, 56vh, 640px);
-  object-fit: cover;
-  object-position: 50% 45%;
-}
-.wide figcaption { margin-top: 10px; }
-
 .ledger {
   margin-left: 22%;
   max-width: 760px;

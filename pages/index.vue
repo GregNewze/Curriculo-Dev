@@ -2,6 +2,7 @@
   <div>
     <HeroSection />
     <AboutSection />
+    <AnatomySection />
     <SkillsSection />
     <ProjectsSection />
     <ExperienceSection />
@@ -12,11 +13,11 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Érico Nunes — Fullstack Developer',
+  title: 'Érico Nunes — Engenharia de IA e Dados',
   description:
-    'Portfólio de Érico Nunes Carneiro — Desenvolvedor Fullstack, Back-End e Sistemas Embarcados. Manaus, AM.',
-  ogTitle: 'Érico Nunes — Fullstack Developer',
+    'Portfólio de Érico Nunes Carneiro — Engenharia de IA e Dados, visão computacional, telemetria industrial e sistemas embarcados. Manaus, AM.',
+  ogTitle: 'Érico Nunes — Engenharia de IA e Dados',
   ogDescription:
-    'Desenvolvedor Full-stack e Sistemas Embarcados com experiência em IoT, APIs REST e automação de fluxos.',
+    'Visão computacional, agentes inteligentes e dados em tempo real, do chão de fábrica ao dashboard.',
 })
 </script>

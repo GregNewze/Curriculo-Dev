@@ -1,6 +1,6 @@
 <template>
   <section id="stack" class="section">
-    <h2 v-reveal class="stack-title">Do chip ao app, ponta a ponta</h2>
+    <h2 v-reveal class="stack-title">Da placa ao dashboard</h2>
 
     <div class="grid12 body">
       <figure v-reveal class="photo">

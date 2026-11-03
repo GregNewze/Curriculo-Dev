@@ -41,8 +41,8 @@ const store = usePortfolioStore()
 
 const facts = [
   { label: 'Base', value: 'Manaus, AM — Brasil' },
+  { label: 'Atual', value: 'Controlador de Automação e Dados I, Whirlpool' },
   { label: 'Formação', value: 'Engenharia da Computação, 2026 – 2030' },
-  { label: 'Foco', value: 'Back-end e sistemas embarcados' },
 ]
 </script>
 

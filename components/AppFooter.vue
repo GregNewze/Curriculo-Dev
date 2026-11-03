@@ -33,10 +33,8 @@ const store = usePortfolioStore()
 const year = new Date().getFullYear()
 
 const credits = [
-  { title: 'Manaus Encontro das aguas', author: 'Mario Roberto Duran Ortiz Mariordo', licence: 'CC BY 3.0', href: 'https://commons.wikimedia.org/wiki/File:Manaus_Encontro_das_aguas_10_2006_103_8x6.jpg' },
   { title: 'Revox B215 control PCB', author: 'Retired electrician', licence: 'CC0', href: 'https://commons.wikimedia.org/wiki/File:Revox_B215_control_PCB_-_microcontrollers.jpg' },
   { title: 'Raspberry Pi 4 Model B - Side', author: 'Laserlicht', licence: 'CC BY-SA 4.0', href: 'https://commons.wikimedia.org/wiki/File:Raspberry_Pi_4_Model_B_-_Side.jpg' },
-  { title: 'Noite no Teatro Amazonas', author: 'Susan Valentim', licence: 'CC BY-SA 4.0', href: 'https://commons.wikimedia.org/wiki/File:Noite_no_Teatro_Amazonas_(cropped).jpg' },
 ]
 </script>
 
