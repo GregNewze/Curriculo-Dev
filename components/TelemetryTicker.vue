@@ -1,7 +1,7 @@
 <template>
   <div class="ticker">
     <pre class="screen" aria-hidden="true"><code>{{ lines }}</code></pre>
-    <p class="muted small">Simulação do formato das mensagens MQTT. Não são dados reais do protótipo.</p>
+    <p class="note mono">Simulação do formato das mensagens MQTT. Não são dados reais do protótipo.</p>
   </div>
 </template>
 
@@ -45,12 +45,16 @@ onBeforeUnmount(() => clearInterval(timer))
 .screen {
   margin: 0 0 10px;
   padding: 18px 20px;
-  background: var(--inv-bg);
-  color: var(--inv-ink);
+  background: rgba(10, 10, 12, 0.72);
+  color: var(--text);
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
   font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
   font-size: 13px;
   line-height: 1.7;
   overflow-x: auto;
   white-space: pre;
 }
+.note { color: var(--muted); line-height: 1.5; text-transform: none; letter-spacing: 0.02em; }
+.ticker { width: 100%; }
 </style>

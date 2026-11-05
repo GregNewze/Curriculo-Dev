@@ -33,12 +33,17 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary' },
       ],
       script: [
-        { innerHTML: "document.documentElement.classList.add('js')", tagPosition: 'head' },
+        {
+          // js: há JavaScript. calm: animações reduzidas (sistema pede, ou o visitante escolheu).
+          innerHTML:
+            "(function(){var d=document.documentElement;d.classList.add('js');try{var m=localStorage.getItem('motion');var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(m==='off'||(m!=='on'&&r))d.classList.add('calm')}catch(e){}})()",
+          tagPosition: 'head',
+        },
       ],
       link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap' },
+        { rel: 'preconnect', href: 'https://api.fontshare.com', crossorigin: '' },
+        { rel: 'preconnect', href: 'https://cdn.fontshare.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=general-sans@400,500,600&display=swap' },
       ],
     },
   },

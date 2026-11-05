@@ -1,14 +1,21 @@
 <template>
-  <section id="certificados" class="section">
-    <h2 v-reveal class="giant">Certificados</h2>
+  <section id="certificados" class="section certs">
+    <div class="container narrow">
+      <header class="head">
+        <p class="label">Aprendizado contínuo</p>
+        <h2 class="h-section" data-title>Certificações</h2>
+      </header>
 
-    <ul class="bars">
-      <li v-for="(cert, i) in store.certificates" :key="cert.name" v-reveal="i * 50" class="bar">
-        <span class="bar-name">{{ cert.name }}</span>
-        <span class="bar-issuer muted">{{ cert.issuer }}</span>
-        <span v-if="cert.hours" class="bar-hours tnum">{{ cert.hours }}</span>
-      </li>
-    </ul>
+      <ul class="rows">
+        <li v-for="cert in store.certificates" :key="cert.name" class="row" data-rise>
+          <div>
+            <h3 class="name">{{ cert.name }}</h3>
+            <p class="muted meta">{{ cert.issuer }} <span aria-hidden="true">•</span> Certificação</p>
+          </div>
+          <span v-if="cert.hours" class="mono hours">{{ cert.hours }}</span>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -19,32 +26,24 @@ const store = usePortfolioStore()
 </script>
 
 <style scoped>
-.giant {
-  font-size: 14.4vw;
-  line-height: 0.82;
-  letter-spacing: -0.06em;
-  white-space: nowrap;
-  margin: 0 0 clamp(24px, 3vw, 44px) -0.04em;
-}
+.narrow { max-width: 1040px; }
+.head { margin-bottom: clamp(40px, 5vw, 72px); text-align: center; }
+.head .label { margin-bottom: 18px; justify-content: center; }
 
-.bars { display: grid; gap: 6px; }
-.bar {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+.rows { display: grid; gap: 12px; }
+.row {
+  display: flex;
   align-items: center;
-  gap: 16px;
-  min-height: 64px;
-  padding: 10px clamp(16px, 2vw, 24px);
-  background: var(--surface);
-  transition: transform 0.25s var(--ease);
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px clamp(20px, 2.4vw, 32px);
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), background-color 0.3s var(--ease);
 }
-.bar:hover { transform: translateX(6px); }
-.bar-name { font-weight: 500; }
-.bar-hours { text-align: right; }
-
-@media (max-width: 640px) {
-  .bar { grid-template-columns: 1fr auto; }
-  .bar-issuer { grid-row: 2; grid-column: 1; font-size: var(--step-small); }
-  .bar-hours { grid-row: 1; grid-column: 2; }
-}
+.row:hover { border-color: rgba(255, 106, 43, 0.5); transform: translateX(6px); background: var(--card-2); }
+.name { font-size: clamp(1.25rem, 1.9vw, 1.75rem); letter-spacing: -0.02em; }
+.meta { margin-top: 6px; font-size: 0.9375rem; }
+.hours { color: var(--accent); font-size: 0.875rem; white-space: nowrap; }
 </style>

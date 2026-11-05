@@ -1,91 +1,135 @@
 <template>
-  <footer class="footer">
-    <div class="top grid12">
-      <div class="invite">
-        <p class="invite-text">Vamos construir<br />algo juntos?</p>
-        <a :href="`mailto:${store.email}`" class="btn">Enviar e-mail</a>
+  <footer id="contato" class="footer">
+    <div class="container">
+      <div class="cta" data-rise>
+        <div class="beam" aria-hidden="true" />
+        <p class="label">Contato</p>
+        <h2 class="h-section" data-title>Vamos construir algo juntos?</h2>
+        <p class="muted lead">
+          Aberto a conversas sobre IA aplicada, visão computacional, dados industriais e sistemas embarcados.
+        </p>
+        <div class="actions">
+          <a :href="`mailto:${store.email}`" class="btn">Enviar e-mail <ArrowUpRight :size="18" aria-hidden="true" /></a>
+          <a href="/CV_Erico_Nunes_ATS.pdf" download class="btn btn-ghost">Baixar CV <ArrowDown :size="18" aria-hidden="true" /></a>
+        </div>
       </div>
 
-      <ul class="links">
-        <li><a :href="store.linkedin" target="_blank" rel="noopener" class="link">LinkedIn</a></li>
-        <li><a :href="store.github" target="_blank" rel="noopener" class="link">GitHub</a></li>
-        <li><a href="/CV_Erico_Nunes_ATS.pdf" download class="link">Baixar CV</a></li>
+      <ul class="contacts">
+        <li v-for="c in contacts" :key="c.label" data-rise>
+          <component
+            :is="c.href ? 'a' : 'div'"
+            :href="c.href"
+            :target="c.external ? '_blank' : undefined"
+            :rel="c.external ? 'noopener' : undefined"
+            class="contact"
+          >
+            <component :is="c.icon" :size="20" class="accent" aria-hidden="true" />
+            <span class="c-label muted">{{ c.label }}</span>
+            <span class="c-value">{{ c.value }}</span>
+          </component>
+        </li>
       </ul>
-    </div>
 
-    <div class="bottom">
-      <p class="credits">
-        Fotos:
-        <template v-for="(c, i) in credits" :key="c.href">
-          <a :href="c.href" target="_blank" rel="noopener">{{ c.title }}</a>, {{ c.author }}, {{ c.licence }}<template v-if="i < credits.length - 1">; </template>
-        </template>
-        · © {{ year }} Érico Nunes Carneiro
-      </p>
-      <p class="mark" aria-hidden="true">Érico Nunes</p>
+      <div class="bottom">
+        <p class="muted">© {{ year }} Érico Nunes Carneiro · Manaus, AM</p>
+        <p class="muted">Feito com Nuxt, GSAP e Three.js</p>
+        <a href="#inicio" class="top-link">Voltar ao topo <ArrowUp :size="16" aria-hidden="true" /></a>
+      </div>
     </div>
+    <p class="wordmark" aria-hidden="true">Érico Nunes</p>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { ArrowDown, ArrowUp, ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-vue-next'
 import { usePortfolioStore } from '~/stores/portfolio'
 
 const store = usePortfolioStore()
 const year = new Date().getFullYear()
 
-const credits = [
-  { title: 'Revox B215 control PCB', author: 'Retired electrician', licence: 'CC0', href: 'https://commons.wikimedia.org/wiki/File:Revox_B215_control_PCB_-_microcontrollers.jpg' },
-  { title: 'Raspberry Pi 4 Model B - Side', author: 'Laserlicht', licence: 'CC BY-SA 4.0', href: 'https://commons.wikimedia.org/wiki/File:Raspberry_Pi_4_Model_B_-_Side.jpg' },
-]
+const contacts = computed(() => [
+  { label: 'E-mail', value: store.email, href: `mailto:${store.email}`, external: false, icon: Mail },
+  { label: 'Telefone', value: store.phone, href: `tel:+55${store.phone.replace(/\D/g, '')}`, external: false, icon: Phone },
+  { label: 'LinkedIn', value: 'in/erico-nunes-dev', href: store.linkedin, external: true, icon: Linkedin },
+  { label: 'GitHub', value: 'GregNewze', href: store.github, external: true, icon: Github },
+  { label: 'Local', value: store.location, href: undefined, external: false, icon: MapPin },
+])
 </script>
 
 <style scoped>
-.footer {
-  margin-top: var(--gap-section);
-  min-height: min(100svh, 820px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(64px, 10vw, 160px);
-  padding: clamp(40px, 6vw, 96px) var(--margin) 0;
-  background: var(--inv-bg);
-  color: var(--inv-ink);
+.footer { position: relative; overflow: hidden; padding: clamp(96px, 12vw, 180px) 0 0; }
+
+.cta {
+  position: relative;
   overflow: hidden;
+  text-align: center;
+  padding: clamp(48px, 7vw, 110px) clamp(24px, 5vw, 80px);
+  border-radius: calc(var(--radius) + 8px);
+  background: var(--card);
+  border: 1px solid var(--line);
 }
-.footer ::selection { background: var(--inv-ink); color: var(--inv-bg); }
-
-.top { row-gap: 40px; align-items: start; }
-.invite { grid-column: 1 / span 7; display: grid; gap: 32px; justify-items: start; }
-.invite-text {
-  font-size: clamp(2.5rem, 5.4vw, 5.5rem);
-  font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
+.cta .label { justify-content: center; margin-bottom: 20px; }
+.cta .h-section { max-width: 11em; margin-inline: auto; position: relative; }
+.beam {
+  position: absolute;
+  inset: -40% 30%;
+  background: linear-gradient(90deg, transparent, rgba(255, 106, 43, 0.2), transparent);
+  filter: blur(40px);
+  transform: rotate(-30deg);
+  pointer-events: none;
 }
-.links { grid-column: 10 / -1; display: grid; gap: 10px; font-size: var(--step-body); }
+.lead { position: relative; margin: 24px auto 0; max-width: 36rem; line-height: 1.6; }
+.actions { position: relative; margin-top: 36px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-.bottom { position: relative; }
-.credits {
-  font-size: var(--step-small);
-  line-height: 1.5;
-  max-width: 70ch;
-  margin-bottom: clamp(16px, 2vw, 32px);
-  opacity: 0.85;
+.contacts { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)); gap: 12px; }
+.contact {
+  display: grid;
+  gap: 8px;
+  height: 100%;
+  padding: 22px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
-.credits a { text-underline-offset: 0.2em; }
+a.contact:hover { border-color: rgba(255, 106, 43, 0.5); transform: translateY(-4px); }
+.c-label { font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.c-value { font-weight: 500; overflow-wrap: anywhere; }
 
-.mark {
-  font-size: 21vw;
-  font-weight: 700;
-  letter-spacing: -0.06em;
+.bottom {
+  margin-top: clamp(64px, 8vw, 110px);
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 0.9375rem;
+}
+.top-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; }
+.top-link:hover { color: var(--accent); }
+
+.wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 19vw;
   line-height: 0.8;
+  letter-spacing: -0.05em;
   white-space: nowrap;
-  margin-left: -0.04em;
-  transform: translateY(26%);
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+  margin-bottom: -4vw;
   user-select: none;
 }
 
-@media (max-width: 760px) {
-  .invite, .links { grid-column: 1 / -1; }
-  .mark { font-size: 27vw; }
+@media (max-width: 1100px) {
+  .contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contacts li:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .contacts { grid-template-columns: 1fr; }
+  .bottom { padding-bottom: 96px; }
 }
 </style>

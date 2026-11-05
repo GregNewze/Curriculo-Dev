@@ -1,26 +1,18 @@
 <template>
-  <section id="stack" class="section">
-    <h2 v-reveal class="stack-title">Da placa ao dashboard</h2>
+  <section id="stack" class="section skills">
+    <div class="container">
+      <header class="head">
+        <p class="label">Stack</p>
+        <h2 class="h-section" data-title>Ferramentas do dia a dia</h2>
+      </header>
 
-    <div class="grid12 body">
-      <figure v-reveal class="photo">
-        <img
-          src="/img/placa-microcontrolador-jpg.jpg"
-          width="1920"
-          height="1080"
-          loading="lazy"
-          alt="Placa de circuito com três microcontroladores Philips MAB8440 e fiação colorida"
-        />
-      </figure>
-
-      <div class="table">
-        <p class="muted small table-name">Stack</p>
-        <ul>
-          <li v-for="(cat, i) in store.skillCategories" :key="cat.title" v-reveal="i * 60" class="row">
-            <span class="muted">{{ cat.title }}</span>
-            <span>{{ cat.skills.join(', ') }}</span>
-          </li>
-        </ul>
+      <div class="bento">
+        <div v-for="(cat, i) in store.skillCategories" :key="cat.title" class="cell" :class="{ big: i === 0 }" data-rise>
+          <h3 class="cat">{{ cat.title }}</h3>
+          <ul class="chips">
+            <li v-for="skill in cat.skills" :key="skill">{{ skill }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -33,33 +25,39 @@ const store = usePortfolioStore()
 </script>
 
 <style scoped>
-.stack-title {
-  font-size: clamp(2.5rem, 4.5vw, 4.25rem);
-  line-height: 0.98;
-  max-width: 14em;
-  padding-left: 3vw;
-  margin: 0 0 clamp(48px, 6vw, 96px);
-}
-.body { align-items: end; row-gap: 40px; }
-.photo { grid-column: 1 / span 4; aspect-ratio: 4 / 5; overflow: hidden; }
-.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.head { margin-bottom: clamp(48px, 6vw, 80px); }
+.head .label { margin-bottom: 18px; }
 
-.table { grid-column: 7 / -1; position: relative; }
-.table-name { margin-bottom: 20px; }
-.row {
+.bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.cell {
   display: grid;
-  grid-template-columns: 30% 1fr;
-  gap: 16px;
-  padding: 13px 0;
-  font-size: var(--step-body);
-  line-height: 1.35;
+  gap: 20px;
+  align-content: start;
+  padding: clamp(24px, 2.6vw, 36px);
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
+.cell:hover { border-color: var(--line-2); transform: translateY(-4px); }
+.cell.big { grid-column: span 2; border-color: rgba(255, 106, 43, 0.4); background: linear-gradient(160deg, rgba(255, 106, 43, 0.1), var(--card) 55%); }
+.cat { font-size: clamp(1.5rem, 2.2vw, 2rem); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  font-size: 0.9375rem;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.chips li:hover { border-color: var(--accent); color: var(--accent); }
 
-@media (max-width: 860px) {
-  .stack-title { padding-left: 0; }
-  .photo { grid-column: 1 / span 8; grid-row: 2; }
-  .table { grid-column: 1 / -1; }
-  .table-name { display: none; }
-  .row { grid-template-columns: 1fr; gap: 2px; }
+@media (max-width: 960px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .bento { grid-template-columns: 1fr; }
+  .cell.big { grid-column: auto; }
 }
 </style>
