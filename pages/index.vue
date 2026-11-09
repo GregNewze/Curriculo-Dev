@@ -1,9 +1,7 @@
 <template>
   <div>
     <HeroSection />
-    <TechMarquee />
     <IntroStatement />
-    <AnatomySection />
     <ProjectsSection />
     <ExperienceSection />
     <SkillsSection />
@@ -55,16 +53,15 @@ onMounted(async () => {
       })
     })
 
-    // Frase de apresentação: as palavras saem do desfoque conforme você rola.
+    // Frase de apresentação: as palavras acendem conforme você rola (só opacidade: blur pesa).
     gsap.utils.toArray<HTMLElement>('[data-blur]').forEach((el) => {
       const words = splitWords(el, 'wd', 'wi')
       if (calm) return
       gsap.fromTo(
         words,
-        { opacity: 0.12, filter: 'blur(10px)' },
+        { opacity: 0.14 },
         {
           opacity: 1,
-          filter: 'blur(0px)',
           ease: 'none',
           stagger: 0.08,
           scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 48%', scrub: true },

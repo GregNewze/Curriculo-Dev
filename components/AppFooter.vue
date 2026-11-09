@@ -1,16 +1,15 @@
 <template>
-  <footer id="contato" class="footer">
+  <footer id="contato" class="sheet footer" data-sheet>
     <div class="container">
-      <div class="cta" data-rise>
-        <div class="beam" aria-hidden="true" />
-        <p class="label">Contato</p>
+      <div class="cta">
+        <p class="tag" data-rise>Contato</p>
         <h2 class="h-section" data-title>Vamos construir algo juntos?</h2>
-        <p class="muted lead">
+        <p class="muted lead" data-rise>
           Aberto a conversas sobre IA aplicada, visão computacional, dados industriais e sistemas embarcados.
         </p>
-        <div class="actions">
-          <a :href="`mailto:${store.email}`" class="btn">Enviar e-mail <ArrowUpRight :size="18" aria-hidden="true" /></a>
-          <a href="/CV_Erico_Nunes_ATS.pdf" download class="btn btn-ghost">Baixar CV <ArrowDown :size="18" aria-hidden="true" /></a>
+        <div class="actions" data-rise>
+          <a :href="`mailto:${store.email}`" class="btn-cta">Enviar e-mail <span class="circ"><ArrowUpRight :size="18" aria-hidden="true" /></span></a>
+          <a href="/CV_Erico_Nunes_ATS.pdf" download class="btn-line">Baixar CV</a>
         </div>
       </div>
 
@@ -23,7 +22,6 @@
             :rel="c.external ? 'noopener' : undefined"
             class="contact"
           >
-            <component :is="c.icon" :size="20" class="accent" aria-hidden="true" />
             <span class="c-label muted">{{ c.label }}</span>
             <span class="c-value">{{ c.value }}</span>
           </component>
@@ -32,8 +30,8 @@
 
       <div class="bottom">
         <p class="muted">© {{ year }} Érico Nunes Carneiro · Manaus, AM</p>
-        <p class="muted">Feito com Nuxt, GSAP e Three.js</p>
-        <a href="#inicio" class="top-link">Voltar ao topo <ArrowUp :size="16" aria-hidden="true" /></a>
+        <p class="muted">Feito com Nuxt e GSAP</p>
+        <a href="#inicio" class="top-link">Voltar ao topo</a>
       </div>
     </div>
     <p class="wordmark" aria-hidden="true">Érico Nunes</p>
@@ -41,47 +39,35 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowDown, ArrowUp, ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-vue-next'
+import { ArrowUpRight } from 'lucide-vue-next'
 import { usePortfolioStore } from '~/stores/portfolio'
 
 const store = usePortfolioStore()
 const year = new Date().getFullYear()
 
 const contacts = computed(() => [
-  { label: 'E-mail', value: store.email, href: `mailto:${store.email}`, external: false, icon: Mail },
-  { label: 'Telefone', value: store.phone, href: `tel:+55${store.phone.replace(/\D/g, '')}`, external: false, icon: Phone },
-  { label: 'LinkedIn', value: 'in/erico-nunes-dev', href: store.linkedin, external: true, icon: Linkedin },
-  { label: 'GitHub', value: 'GregNewze', href: store.github, external: true, icon: Github },
-  { label: 'Local', value: store.location, href: undefined, external: false, icon: MapPin },
+  { label: 'E-mail', value: store.email, href: `mailto:${store.email}`, external: false },
+  { label: 'Telefone', value: store.phone, href: `tel:+55${store.phone.replace(/\D/g, '')}`, external: false },
+  { label: 'LinkedIn', value: 'in/erico-nunes-dev', href: store.linkedin, external: true },
+  { label: 'GitHub', value: 'GregNewze', href: store.github, external: true },
+  { label: 'Local', value: store.location, href: undefined, external: false },
 ])
 </script>
 
 <style scoped>
-.footer { position: relative; overflow: hidden; padding: clamp(96px, 12vw, 180px) 0 0; }
-
-.cta {
-  position: relative;
+.footer {
   overflow: hidden;
-  text-align: center;
-  padding: clamp(48px, 7vw, 110px) clamp(24px, 5vw, 80px);
-  border-radius: calc(var(--radius) + 8px);
-  background: var(--card);
-  border: 1px solid var(--line);
+  padding-top: clamp(80px, 10vw, 150px);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
-.cta .label { justify-content: center; margin-bottom: 20px; }
-.cta .h-section { max-width: 11em; margin-inline: auto; position: relative; }
-.beam {
-  position: absolute;
-  inset: -40% 30%;
-  background: linear-gradient(90deg, transparent, rgba(255, 106, 43, 0.2), transparent);
-  filter: blur(40px);
-  transform: rotate(-30deg);
-  pointer-events: none;
-}
-.lead { position: relative; margin: 24px auto 0; max-width: 36rem; line-height: 1.6; }
-.actions { position: relative; margin-top: 36px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-.contacts { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)); gap: 12px; }
+.cta { display: grid; justify-items: center; gap: 22px; text-align: center; }
+.cta .h-section { max-width: 11em; }
+.lead { max-width: 36rem; line-height: 1.6; }
+.actions { margin-top: 14px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.contacts { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(4, minmax(0, 1fr)); gap: 12px; }
 .contact {
   display: grid;
   gap: 8px;
@@ -93,8 +79,8 @@ const contacts = computed(() => [
   text-decoration: none;
   transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
 }
-a.contact:hover { border-color: rgba(255, 106, 43, 0.5); transform: translateY(-4px); }
-.c-label { font-size: 0.8125rem; letter-spacing: 0.12em; text-transform: uppercase; }
+a.contact:hover { border-color: rgba(var(--accent-rgb), 0.5); transform: translateY(-4px); }
+.c-label { font-size: 0.875rem; }
 .c-value { font-weight: 500; overflow-wrap: anywhere; }
 
 .bottom {
@@ -107,8 +93,8 @@ a.contact:hover { border-color: rgba(255, 106, 43, 0.5); transform: translateY(-
   flex-wrap: wrap;
   font-size: 0.9375rem;
 }
-.top-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 600; }
-.top-link:hover { color: var(--accent); }
+.top-link { text-decoration: none; font-weight: 600; }
+.top-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .wordmark {
   font-family: var(--display);
@@ -119,7 +105,7 @@ a.contact:hover { border-color: rgba(255, 106, 43, 0.5); transform: translateY(-
   white-space: nowrap;
   text-align: center;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+  -webkit-text-stroke: 1px var(--line-2);
   margin-bottom: -4vw;
   user-select: none;
 }

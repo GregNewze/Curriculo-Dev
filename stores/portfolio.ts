@@ -11,6 +11,8 @@ export interface Project {
   stack: string[]
   github?: string
   live?: string
+  /** Foto própria do projeto (em /public/img). Sem foto, o cartão usa uma capa tipográfica. */
+  photo?: { src: string; alt: string; width: number; height: number }
 }
 
 export interface Certificate {
@@ -166,7 +168,24 @@ export const usePortfolioStore = defineStore('portfolio', {
       },
     ] as Project[],
 
+    // Ordem cronológica pela data de início: do mais antigo ao atual.
     experiences: [
+      {
+        title: 'Desenvolvedor Back End & Sistemas Embarcados',
+        org: 'Mach Force · Shell Eco-marathon Team',
+        date: 'Fev. 2026 – Ago. 2026',
+        // TEXTO DO LINKEDIN (cortado no "mais"): revisar
+        description:
+          'Membro da 1ª equipe da região Norte a participar da Shell Eco-marathon, com um protótipo de alta eficiência energética. Atuo como desenvolvedor na área de comunicação e integração.',
+      },
+      {
+        title: 'Monitor Técnico',
+        org: 'Fundação Matias Machline · Manaus, AM',
+        date: 'Mar. 2026 – Abr. 2026',
+        // TEXTO DO LINKEDIN (cortado no "mais"): revisar
+        description:
+          'Manutenção de laboratórios, gestão de redes e apoio didático, garantindo o funcionamento de equipamentos técnicos (hardware, software e infraestrutura de redes).',
+      },
       {
         title: 'Controlador de Automação e Dados I',
         org: 'Whirlpool Corporation · Manaus, AM',
@@ -175,11 +194,21 @@ export const usePortfolioStore = defineStore('portfolio', {
           'Projeto Injetados 1.0: liderança técnica na migração de sistemas legados para a plataforma deviceWise, conectando o maquinário industrial ao banco de dados MES e ao Data Lake corporativo (BigQuery). Ingestão contínua de telemetria para cálculo automatizado de OEE e monitoramento da produção em tempo real, com rastreabilidade de ponta a ponta.',
       },
       {
+        title: 'Founder & Systems Engineer',
+        org: 'Itacode North · Negócio próprio, soluções de TI',
+        date: 'Jul. 2026 – atual',
+        // TEXTO DO LINKEDIN: revisar
+        description: 'Projeto independente. Foco em liderança e desenvolvimento de soluções completas de TI.',
+      },
+    ] as Experience[],
+
+    // Programas e eventos: aparecem abaixo da trajetória, junto da formação.
+    highlights: [
+      {
         title: 'Aspire Leaders Program',
         org: 'Iniciativa global fundada por professores da Harvard Business School',
         date: '2026',
-        description:
-          'Aprovado no programa de desenvolvimento de lideranças emergentes e impacto em escala.',
+        description: 'Aprovado no programa de desenvolvimento de lideranças emergentes e impacto em escala.',
       },
       {
         title: 'Hackathon Urbanos da Amazônia',

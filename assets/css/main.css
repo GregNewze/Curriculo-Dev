@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------
-   Escuro, um acento de sinal (laranja da telemetria), cartões arredondados.
+   Preto carvão de fundo, carmesim para ação e sinal, branco osso nas folhas que alternam com o carvão.
    Display: Cabinet Grotesk. Texto: General Sans. Números/datas: mono do sistema.
    ------------------------------------------------------------------ */
 :root {
-  --bg: #0a0a0c;
-  --bg-2: #0f0f12;
-  --card: #141418;
-  --card-2: #1b1b20;
+  --bg: #121413;
+  --bg-2: #161917;
+  --card: #1b1e1c;
+  --card-2: #232724;
   --line: rgba(255, 255, 255, 0.08);
   --line-2: rgba(255, 255, 255, 0.16);
-  --text: #f4f4f5;
-  --muted: #a1a1aa;
-  --accent: #ff6a2b;
-  --accent-ink: #0a0a0c;
-  --glow: 0 0 28px rgba(255, 106, 43, 0.45);
+  --text: #f3f4f2;
+  --muted: #a7ada8;
 
-  /* nomes usados pelos diagramas dos projetos */
-  --signal: var(--accent);
-  --bp: var(--card-2);
+  /* carmesim: botões, destaques, sinal. --accent-hi é a versão legível em texto pequeno. */
+  --accent: #dc143c;
+  --accent-rgb: 220, 20, 60;
+  --accent-hi: #f0475f;
+  --accent-ink: #ffffff;
+  --glow: 0 0 28px rgba(var(--accent-rgb), 0.45);
 
   --display: 'Cabinet Grotesk', 'General Sans', system-ui, sans-serif;
   --mono: ui-monospace, 'Cascadia Code', 'SF Mono', Consolas, monospace;
@@ -66,7 +66,7 @@
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-hi);
   }
   .label::before { content: '✦'; font-size: 0.95em; }
 
@@ -92,7 +92,7 @@
     box-shadow: var(--glow);
     transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(255, 106, 43, 0.6); }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.6); }
   .btn:active { transform: scale(0.97); }
   .btn-ghost {
     background: var(--card-2);
@@ -100,7 +100,78 @@
     box-shadow: none;
     border: 1px solid var(--line);
   }
-  .btn-ghost:hover { box-shadow: none; border-color: var(--line-2); background: #23232a; }
+  .btn-ghost:hover { box-shadow: none; border-color: var(--line-2); background: #2b302d; }
+
+  /* Botão principal: pílula clara com a seta num círculo carmesim. */
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 54px;
+    padding: 0 6px 0 24px;
+    border-radius: 999px;
+    background: var(--text);
+    color: var(--bg);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.25s var(--ease);
+  }
+  .btn-cta .circ {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    transition: transform 0.35s var(--ease);
+  }
+  .btn-cta:hover { transform: translateY(-2px); }
+  .btn-cta:hover .circ { transform: rotate(45deg); }
+  .btn-cta:active { transform: scale(0.97); }
+  .btn-line {
+    display: inline-flex;
+    align-items: center;
+    min-height: 54px;
+    padding: 0 26px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .btn-line:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.3); }
+
+  /* Etiqueta de seção em pílula, sem caixa alta. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  /* Folha branco osso: alterna com o carvão, cantos arredondados, recuada das bordas.
+     Dentro dela os tokens se invertem: tinta escura sobre papel. */
+  .sheet {
+    --bg: #f2efe9;
+    --text: #141615;
+    --muted: #595d5a;
+    --line: rgba(20, 22, 21, 0.1);
+    --line-2: rgba(20, 22, 21, 0.2);
+    --card: #ffffff;
+    --card-2: #f8f6f2;
+    position: relative;
+    margin-inline: clamp(8px, 1vw, 14px);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--text);
+  }
+  .sheet .btn-line:hover { background: rgba(20, 22, 21, 0.05); border-color: rgba(20, 22, 21, 0.35); }
 
   .pill {
     display: inline-flex;
